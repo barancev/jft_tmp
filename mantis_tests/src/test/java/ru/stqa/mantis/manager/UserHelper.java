@@ -36,4 +36,23 @@ public class UserHelper extends HelperBase {
         type(By.name("password_confirm"), password);
         click(By.cssSelector("button[type='submit']"));
     }
+
+    public void startRegistration(String username, String email) {
+        if (manager.session().isLoggedIn()) {
+            manager.session().logout();
+        }
+        manager.driver().get(String.format("%s/signup_page.php", manager.property("web.baseUrl")));
+        type(By.name("username"), username);
+        type(By.name("email"), email);
+        click(By.cssSelector("input[type='submit']"));
+    }
+
+    public void finishRegistration(String confirmationUrl, String realname, String password) {
+        manager.driver().get(confirmationUrl);
+        type(By.name("realname"), realname);
+        type(By.name("password"), password);
+        type(By.name("password_confirm"), password);
+        click(By.cssSelector("button[type='submit']"));
+    }
+
 }
